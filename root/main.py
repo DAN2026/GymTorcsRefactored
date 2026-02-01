@@ -1,25 +1,44 @@
 from network import Client, Arguments
 
-def main():
-    # 1. Setup Arguments (Host, Port, ID)
-    args = Arguments()
+def move(C):
+            C.get_servers_input()
+            
+            speed = C.S.d['speedX']
+            target_speed = 160 # km/h
+            steering_angle = C.S.d['angle']
+            track_pos = C.S.d['trackPos']
+
+            C.R.d['steer'] = (steering_angle - track_pos * 0.5) / 0.785398 
+            
+            if speed < target_speed:
+                C.R.d['accel'] = 0.5
+                C.R.d['brake'] = 0
+            else:
+                C.R.d['accel'] = 0
+                C.R.d['brake'] = 0
+
+            if speed < 50: C.R.d['gear'] = 1
+            elif speed < 80: C.R.d['gear'] = 2
+            else: C.R.d['gear'] = 3
+            
+            C.respond_to_server()
     
-    # 2. Create the ONE and ONLY Client
-    # This replaces the gym 'TorcsEnv' for now.
-    C = Client(p=3001)
+def main():
+    
+    args = Arguments() # Handles players arguments.
+    
+    C = Client(p=3001) # This should be a singleton class only one instance currently.
 
     print("Classical Control Mode Active...")
 
     try:
-        # 3. The Infinite Driving Loop
+        # The MAIN loop
+        
         while True:
-            # A. Get data from TORCS (S)
+            
             C.get_servers_input()
-            
-            # B. Apply your modular 'Brain' (R)
-            # This is where your STEER_GAIN and TARGET_SPEED live
-            
-            # C. Send commands back to TORCS
+
+
             C.respond_to_server()
             
     except KeyboardInterrupt:

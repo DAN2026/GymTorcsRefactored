@@ -223,7 +223,6 @@ class TorcsEnv:
 
         return torcs_action
 
-
     def obs_vision_to_image_rgb(self, obs_image_vec):
         image_vec =  obs_image_vec
         rgb = []
