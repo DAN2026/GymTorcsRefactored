@@ -1,25 +1,23 @@
 
 class Utility:
     
-    def __init__(self):
-        pass
-
     @staticmethod
-    def destringify(self, s):
-        '''makes a string into a value or a list of strings into a list of
-        values (if possible)'''
+    def destringify(s): 
+        '''makes a string into a value or a list of strings into a list of values'''
         if not s: return s
         if type(s) is str:
             try:
                 return float(s)
             except ValueError:
-                print("Could not find a value in %s" % s)
                 return s
         elif type(s) is list:
+            if len(s) < 1: return s # Safety check
             if len(s) < 2:
-                return self.destringify(s[0])
+                # Use Utility.destringify instead of self.destringify
+                return Utility.destringify(s[0]) 
             else:
-                return [self.destringify(i) for i in s]
+                # Use Utility.destringify here too
+                return [Utility.destringify(i) for i in s]
 
     def clip(v,lo,hi):
         if v<lo: return lo
