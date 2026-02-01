@@ -1,7 +1,5 @@
 from network import Client, Arguments
 
-# Import your modular drive logic from wherever you stored it
-
 def main():
     # 1. Setup Arguments (Host, Port, ID)
     args = Arguments()
@@ -20,7 +18,6 @@ def main():
             
             # B. Apply your modular 'Brain' (R)
             # This is where your STEER_GAIN and TARGET_SPEED live
-            
             
             # C. Send commands back to TORCS
             C.respond_to_server()
